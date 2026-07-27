@@ -4,6 +4,14 @@
  * Muestra opciones para aceptar/rechazar cookies
  * Guarda la preferencia en localStorage
  */
+import type { SiteSettings } from '../data/editorial';
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface Props {
+	data: SiteSettings['cookies'];
+}
+
+const { data } = Astro.props;
 ---
 
 <div 
@@ -18,14 +26,17 @@
 			<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 lg:gap-8">
 				<!-- Texto -->
 				<div class="flex-1">
-					<h3 id="cookie-title" class="font-semibold text-azento-700 mb-1">
-						🍪 Usamos cookies
+					<h3 id="cookie-title" class="font-semibold text-azento-700 mb-1" data-tina-field={tinaField(data, 'title')}>
+						{data.title}
 					</h3>
 					<p id="cookie-description" class="text-sm text-azento-500 leading-relaxed">
-						Utilizamos tecnologías necesarias para guardar tus preferencias y, si lo aceptas, Google Analytics para analizar el tráfico.
-						Puedes aceptar, rechazar o configurar tus preferencias.
-						<a href="/politica-cookies" class="text-accent-600 hover:text-accent-500 underline ml-1">
-							Más información
+						<span data-tina-field={tinaField(data, 'description')}>{data.description}</span>
+						<a
+							href="/politica-cookies"
+							class="text-accent-600 hover:text-accent-500 underline ml-1"
+							data-tina-field={tinaField(data, 'moreInfoLabel')}
+						>
+							{data.moreInfoLabel}
 						</a>
 					</p>
 				</div>
@@ -38,23 +49,25 @@
 							border border-neutral-300 rounded-full hover:border-azento-400 
 							transition-colors"
 					>
-						Configurar
+						{data.settingsLabel}
 					</button>
 					<button
 						id="cookie-reject-btn"
 						class="px-6 py-2 text-sm font-semibold text-azento-600 hover:text-azento-700 
 							border border-azento-300 rounded-full hover:border-azento-400 
 							transition-colors"
+						data-tina-field={tinaField(data, 'settingsLabel')}
 					>
-						Rechazar
+						{data.rejectLabel}
 					</button>
 					<button
 						id="cookie-accept-btn"
 						class="px-6 py-2 text-sm font-semibold text-azento-600 hover:text-azento-700 
 							border border-azento-300 rounded-full hover:border-azento-400 
 							transition-colors"
+						data-tina-field={tinaField(data, 'rejectLabel')}
 					>
-						Aceptar todas
+						{data.acceptLabel}
 					</button>
 				</div>
 			</div>
@@ -69,19 +82,24 @@
 	role="dialog"
 	aria-modal="true"
 	aria-labelledby="cookie-modal-title"
->
+						data-tina-field={tinaField(data, 'acceptLabel')}
+					>
 	<div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
 		<!-- Header -->
 		<div class="p-6 border-b border-neutral-200">
 			<div class="flex items-center justify-between">
-				<h3 id="cookie-modal-title" class="font-display text-xl font-semibold text-azento-700">
-					Configurar cookies
+				<h3
+					id="cookie-modal-title"
+					class="font-display text-xl font-semibold text-azento-700"
+					data-tina-field={tinaField(data, 'modalTitle')}
+				>
+					{data.modalTitle}
 				</h3>
 				<button 
 					id="cookie-modal-close"
 					class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 
 						flex items-center justify-center transition-colors"
-					aria-label="Cerrar"
+					aria-label={data.closeLabel}
 				>
 					<svg class="w-4 h-4 text-azento-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -95,14 +113,17 @@
 			<!-- Cookie necesarias -->
 			<div class="flex items-start justify-between gap-4">
 				<div class="flex-1">
-					<h4 class="font-medium text-azento-700 mb-1">Cookies necesarias</h4>
-					<p class="text-sm text-azento-500">
-						Esenciales para el funcionamiento del sitio y para recordar tu elección. No se pueden desactivar.
+					<h4 class="font-medium text-azento-700 mb-1" data-tina-field={tinaField(data, 'necessaryTitle')}>{data.necessaryTitle}</h4>
+					<p class="text-sm text-azento-500" data-tina-field={tinaField(data, 'necessaryDescription')}>
+						{data.necessaryDescription}
 					</p>
 				</div>
 				<div class="flex-shrink-0">
-					<span class="inline-block px-3 py-1 text-xs font-medium text-azento-600 bg-azento-100 rounded-full">
-						Siempre activas
+					<span
+						class="inline-block px-3 py-1 text-xs font-medium text-azento-600 bg-azento-100 rounded-full"
+						data-tina-field={tinaField(data, 'alwaysActiveLabel')}
+					>
+						{data.alwaysActiveLabel}
 					</span>
 				</div>
 			</div>
@@ -110,9 +131,9 @@
 			<!-- Cookies analíticas -->
 			<div class="flex items-start justify-between gap-4">
 				<div class="flex-1">
-					<h4 class="font-medium text-azento-700 mb-1">Cookies analíticas</h4>
-					<p class="text-sm text-azento-500">
-						Nos ayudan a entender cómo interactúas con el sitio para mejorarlo.
+					<h4 class="font-medium text-azento-700 mb-1" data-tina-field={tinaField(data, 'analyticsTitle')}>{data.analyticsTitle}</h4>
+					<p class="text-sm text-azento-500" data-tina-field={tinaField(data, 'analyticsDescription')}>
+						{data.analyticsDescription}
 					</p>
 				</div>
 				<div class="flex-shrink-0">
@@ -136,16 +157,18 @@
 				class="flex-1 px-6 py-3 text-sm font-semibold text-white bg-azento-600 
 					hover:bg-azento-500 rounded-full shadow-md hover:shadow-lg 
 					transition-all duration-200"
+				data-tina-field={tinaField(data, 'saveLabel')}
 			>
-				Guardar preferencias
+				{data.saveLabel}
 			</button>
 			<button
 				id="cookie-accept-all"
 				class="flex-1 px-6 py-3 text-sm font-medium text-azento-600 
 					border border-azento-300 rounded-full hover:border-azento-400 
 					transition-colors"
+				data-tina-field={tinaField(data, 'acceptLabel')}
 			>
-				Aceptar todas
+				{data.acceptLabel}
 			</button>
 		</div>
 	</div>

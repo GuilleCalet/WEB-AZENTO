@@ -1,0 +1,39 @@
+---
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import DivisionPageContent from '../components/DivisionPageContent.astro';
+import { divisions, type Division } from '../data/editorial';
+import { getPage } from '../lib/tina/data';
+import { islands } from '../lib/tina/islands';
+
+export function getStaticPaths() {
+	return divisions.map((division: Division) => ({
+		params: { division: division.slug },
+		props: { division },
+	}));
+}
+
+interface Props {
+	division: Division;
+}
+
+const { division } = Astro.props;
+const home = await getPage('home');
+const pageData = home.data?.page;
+---
+
+<Layout title={division.seoTitle} description={division.seoDescription} image={division.heroImage}>
+	<TinaIsland name="homeNavbar" wrapper={islands.homeNavbar.wrapper}>
+		<Navbar data={pageData} />
+	</TinaIsland>
+
+	<TinaIsland name="divisionPage" params={{ slug: division.slug }} wrapper={islands.divisionPage.wrapper} primary>
+		<DivisionPageContent division={division} />
+	</TinaIsland>
+
+	<TinaIsland name="homeFooter" wrapper={islands.homeFooter.wrapper}>
+		<Footer data={pageData} />
+	</TinaIsland>
+</Layout>

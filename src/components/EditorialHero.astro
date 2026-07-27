@@ -1,0 +1,63 @@
+---
+// @ts-nocheck
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { PageQuery } from '../../tina/__generated__/types';
+
+interface Props {
+	data?: PageQuery['page'] | null;
+}
+
+const { data } = Astro.props;
+const editorial = data?.editorialHome;
+const heroImage = data?.backgroundImages?.[0]?.image || '/images/jardin_2.png';
+---
+
+<section id="inicio" class="relative flex min-h-[100svh] items-end overflow-hidden bg-azento-900">
+	<img
+		src={heroImage}
+		alt={editorial?.heroImageAlt || ''}
+		class="absolute inset-0 h-full w-full object-cover"
+		data-tina-field={data?.backgroundImages?.[0] ? tinaField(data.backgroundImages[0], 'image') : undefined}
+	/>
+	<div class="absolute inset-0 bg-gradient-to-r from-azento-950/80 via-azento-900/55 to-azento-800/10"></div>
+	<div class="relative mx-auto w-full max-w-7xl px-6 pb-20 pt-40 lg:pb-24">
+		<p
+			class="mb-8 text-[0.68rem] uppercase tracking-[0.48em] text-accent-300"
+			data-tina-field={editorial ? tinaField(editorial, 'heroEyebrow') : undefined}
+		>
+			{editorial?.heroEyebrow}
+		</p>
+		<h1 class="max-w-4xl font-display text-6xl leading-[0.88] text-white sm:text-7xl lg:text-[7rem]">
+			<span data-tina-field={editorial ? tinaField(editorial, 'heroPrefix') : undefined}>{editorial?.heroPrefix}</span>
+			<em
+				class="block font-normal text-accent-300"
+				data-tina-field={editorial ? tinaField(editorial, 'heroAccent') : undefined}
+			>
+				{editorial?.heroAccent}
+			</em>
+			<span data-tina-field={editorial ? tinaField(editorial, 'heroSuffix') : undefined}>{editorial?.heroSuffix}</span>
+		</h1>
+		<p
+			class="mt-8 max-w-md text-base leading-7 text-white/70"
+			data-tina-field={editorial ? tinaField(editorial, 'heroDescription') : undefined}
+		>
+			{editorial?.heroDescription}
+		</p>
+		<div class="mt-10 flex flex-wrap gap-4">
+			<a
+				href="#divisiones"
+				class="bg-accent-400 px-7 py-4 text-sm font-medium text-azento-950 hover:bg-accent-300"
+				data-tina-field={editorial ? tinaField(editorial, 'divisionsButton') : undefined}
+			>
+				{editorial?.divisionsButton} &nbsp; →
+			</a>
+			<a
+				href="/proyectos"
+				class="border border-white/30 px-7 py-4 text-sm font-medium text-white hover:bg-white/10"
+				data-tina-field={editorial ? tinaField(editorial, 'projectsButton') : undefined}
+			>
+				{editorial?.projectsButton}
+			</a>
+		</div>
+	</div>
+</section>

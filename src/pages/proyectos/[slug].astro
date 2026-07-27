@@ -1,0 +1,43 @@
+---
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import ProjectDetailContent from '../../components/ProjectDetailContent.astro';
+import { projects, siteSettings, type Project } from '../../data/editorial';
+import { getPage } from '../../lib/tina/data';
+import { islands } from '../../lib/tina/islands';
+
+export function getStaticPaths() {
+	return projects.map((project: Project) => ({
+		params: { slug: project.slug },
+		props: { project },
+	}));
+}
+
+interface Props {
+	project: Project;
+}
+
+const { project } = Astro.props;
+const home = await getPage('home');
+const pageData = home.data?.page;
+---
+
+<Layout
+	title={`${project.title} | ${siteSettings.projectDetail.seoSuffix}`}
+	description={project.summary}
+	image={project.coverImage}
+>
+	<TinaIsland name="homeNavbar" wrapper={islands.homeNavbar.wrapper}>
+		<Navbar data={pageData} />
+	</TinaIsland>
+
+	<TinaIsland name="projectDetail" params={{ slug: project.slug }} wrapper={islands.projectDetail.wrapper} primary>
+		<ProjectDetailContent project={project} />
+	</TinaIsland>
+
+	<TinaIsland name="homeFooter" wrapper={islands.homeFooter.wrapper}>
+		<Footer data={pageData} />
+	</TinaIsland>
+</Layout>

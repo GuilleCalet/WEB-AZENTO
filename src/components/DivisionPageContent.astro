@@ -1,0 +1,155 @@
+---
+// @ts-nocheck
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import ProjectCard from './ProjectCard.astro';
+import { getProjectsByDivision, siteSettings } from '../data/editorial';
+
+interface Props {
+	division: any;
+}
+
+const { division } = Astro.props;
+const projects = getProjectsByDivision(division.slug);
+const cardWrapper = { tag: 'div' };
+---
+
+<main>
+	<section class="relative min-h-[82svh] overflow-hidden bg-azento-900">
+		<img
+			src={division.heroImage}
+			alt={division.heroAlt}
+			class="absolute inset-0 h-full w-full object-cover"
+			data-tina-field={tinaField(division, 'heroImage')}
+		/>
+		<div class="absolute inset-0 bg-gradient-to-r from-azento-950/90 via-azento-900/60 to-transparent"></div>
+		<div class="relative mx-auto flex min-h-[82svh] max-w-7xl items-end px-6 pb-20 pt-40">
+			<div class="max-w-3xl">
+				<p
+					class="mb-8 text-[0.68rem] uppercase tracking-[0.45em] text-accent-300"
+					data-tina-field={tinaField(division, 'eyebrow')}
+				>
+					{division.eyebrow}
+				</p>
+				<h1 class="font-display text-6xl leading-[0.95] text-white sm:text-7xl lg:text-8xl">
+					<span data-tina-field={tinaField(division, 'showcaseBrand')}>{division.showcaseBrand}</span>
+					<em
+						class="block font-normal text-accent-300"
+						data-tina-field={tinaField(division, 'showcaseName')}
+					>
+						{division.showcaseName}
+					</em>
+				</h1>
+				<p
+					class="mt-8 max-w-2xl text-lg leading-8 text-white/70"
+					data-tina-field={tinaField(division, 'headline')}
+				>
+					{division.headline}
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-white py-20 lg:py-28">
+		<div class="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+			<div>
+				<p
+					class="text-[0.68rem] uppercase tracking-[0.4em] text-accent-600"
+					data-tina-field={tinaField(division, 'specialtiesEyebrow')}
+				>
+					{division.specialtiesEyebrow}
+				</p>
+				<h2 class="mt-6 font-display text-4xl text-azento-950 sm:text-5xl">
+					<span data-tina-field={tinaField(division, 'specialtiesTitle')}>{division.specialtiesTitle}</span>
+					<em
+						class="font-normal text-azento-600"
+						data-tina-field={tinaField(division, 'specialtiesAccent')}
+					>
+						{division.specialtiesAccent}
+					</em>
+				</h2>
+				<p
+					class="mt-7 leading-7 text-neutral-500"
+					data-tina-field={tinaField(division, 'description')}
+				>
+					{division.description}
+				</p>
+			</div>
+			<div class="divide-y divide-neutral-200 border-t border-neutral-200">
+				{division.services?.map((service, index) => (
+					<article class="grid gap-3 py-7 sm:grid-cols-[3rem_1fr]">
+						<span class="font-display text-xl text-accent-600">0{index + 1}</span>
+						<div>
+							<h3 class="text-lg font-medium text-azento-900" data-tina-field={tinaField(service, 'title')}>
+								{service.title}
+							</h3>
+							<p class="mt-2 leading-7 text-neutral-500" data-tina-field={tinaField(service, 'description')}>
+								{service.description}
+							</p>
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-neutral-100 py-20 lg:py-28">
+		<div class="mx-auto max-w-7xl px-6">
+			<div class="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+				<div>
+					<p
+						class="mb-5 text-[0.68rem] uppercase tracking-[0.42em] text-accent-600"
+						data-tina-field={tinaField(division, 'projectsEyebrow')}
+					>
+						{division.projectsEyebrow}
+					</p>
+					<h2 class="font-display text-5xl text-azento-950" data-tina-field={tinaField(division, 'projectsTitle')}>
+						{division.projectsTitle}
+					</h2>
+				</div>
+				<a
+					href="/proyectos"
+					class="text-sm text-azento-600"
+					data-tina-field={tinaField(division, 'allProjectsLabel')}
+				>
+					{division.allProjectsLabel} ↗
+				</a>
+			</div>
+			<div class="grid gap-5 md:grid-cols-2">
+				{projects.map((project, index) => (
+					<TinaIsland
+						name="projectCard"
+						params={{ slug: project.slug, featured: index === 0 ? 'true' : 'false' }}
+						wrapper={cardWrapper}
+					>
+						<ProjectCard project={project} labels={siteSettings.projectCard} featured={index === 0} />
+					</TinaIsland>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-azento-700 py-20 text-center text-white">
+		<div class="mx-auto max-w-3xl px-6">
+			<p
+				class="text-[0.68rem] uppercase tracking-[0.42em] text-accent-300"
+				data-tina-field={tinaField(division, 'ctaEyebrow')}
+			>
+				{division.ctaEyebrow}
+			</p>
+			<h2
+				class="mt-6 font-display text-4xl sm:text-5xl"
+				data-tina-field={tinaField(division, 'ctaHeadline')}
+			>
+				{division.ctaHeadline}
+			</h2>
+			<a
+				href="/#presupuesto"
+				class="mt-9 inline-flex bg-accent-400 px-8 py-4 text-sm font-medium text-azento-950"
+				data-tina-field={tinaField(division, 'ctaLabel')}
+			>
+				{division.ctaLabel} &nbsp; →
+			</a>
+		</div>
+	</section>
+</main>

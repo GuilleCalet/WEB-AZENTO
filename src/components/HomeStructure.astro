@@ -1,0 +1,47 @@
+---
+// @ts-nocheck
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { PageQuery } from '../../tina/__generated__/types';
+
+interface Props {
+	data?: PageQuery['page'] | null;
+}
+
+const { data } = Astro.props;
+const editorial = data?.editorialHome;
+---
+
+<section id="divisiones" class="bg-neutral-100 py-20 lg:py-28">
+	<div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.55fr_1.45fr] lg:gap-24">
+		<img
+			src={data?.navbar?.logoImage || '/images/logo_azento.jpg'}
+			alt={data?.navbar?.logoAlt || ''}
+			class="h-40 w-40 object-cover"
+			data-tina-field={data?.navbar ? tinaField(data.navbar, 'logoImage') : undefined}
+		/>
+		<div>
+			<p
+				class="mb-8 text-[0.68rem] uppercase tracking-[0.45em] text-azento-600"
+				data-tina-field={editorial ? tinaField(editorial, 'structureEyebrow') : undefined}
+			>
+				{editorial?.structureEyebrow}
+			</p>
+			<h2 class="max-w-4xl font-display text-5xl leading-[1.05] text-azento-950 sm:text-6xl">
+				<span data-tina-field={editorial ? tinaField(editorial, 'structurePrefix') : undefined}>{editorial?.structurePrefix}</span>
+				<em
+					class="font-normal text-azento-600"
+					data-tina-field={editorial ? tinaField(editorial, 'structureAccent') : undefined}
+				>
+					{editorial?.structureAccent}
+				</em>
+				<span data-tina-field={editorial ? tinaField(editorial, 'structureSuffix') : undefined}>{editorial?.structureSuffix}</span>
+			</h2>
+			<p
+				class="mt-8 max-w-2xl text-lg leading-8 text-neutral-500"
+				data-tina-field={editorial ? tinaField(editorial, 'structureDescription') : undefined}
+			>
+				{editorial?.structureDescription}
+			</p>
+		</div>
+	</div>
+</section>

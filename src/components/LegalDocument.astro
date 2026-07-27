@@ -1,0 +1,30 @@
+---
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import Layout from '../layouts/Layout.astro';
+import Navbar from './Navbar.astro';
+import Footer from './Footer.astro';
+import LegalContent from './LegalContent.astro';
+import type { LegalPage } from '../data/editorial';
+import { islands } from '../lib/tina/islands';
+
+interface Props {
+	page: LegalPage;
+	navigationData?: unknown;
+}
+
+const { page, navigationData } = Astro.props;
+---
+
+<Layout title={page.seoTitle} description={page.seoDescription}>
+	<TinaIsland name="homeNavbar" wrapper={islands.homeNavbar.wrapper}>
+		<Navbar data={navigationData as any} />
+	</TinaIsland>
+
+	<TinaIsland name="legalPage" params={{ slug: page.slug }} wrapper={islands.legalPage.wrapper} primary>
+		<LegalContent page={page} />
+	</TinaIsland>
+
+	<TinaIsland name="homeFooter" wrapper={islands.homeFooter.wrapper}>
+		<Footer data={navigationData as any} />
+	</TinaIsland>
+</Layout>

@@ -1,0 +1,87 @@
+---
+// @ts-nocheck
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { Division, Project } from '../data/editorial';
+
+interface Props {
+	division: Division;
+	projects: Project[];
+	reverse?: boolean;
+}
+
+const { division, projects, reverse = false } = Astro.props;
+const projectCount = projects.length;
+---
+
+<section class:list={['py-20 lg:py-28', reverse ? 'bg-azento-700 text-white' : 'bg-white text-azento-950']}>
+	<div class="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20">
+		<div class:list={[reverse ? 'lg:order-2' : '']}>
+			<p class="mb-8 text-[0.68rem] font-medium uppercase tracking-[0.4em] text-accent-500">
+				<span data-tina-field={tinaField(division, 'eyebrow')}>{division.eyebrow}</span>
+			</p>
+			<h2 class="font-display text-5xl leading-[0.95] sm:text-6xl">
+				<span class="block" data-tina-field={tinaField(division, 'showcaseBrand')}>{division.showcaseBrand}</span>
+				<em
+					class:list={['font-normal', reverse ? 'text-accent-300' : 'text-azento-600']}
+					data-tina-field={tinaField(division, 'showcaseName')}
+				>
+					{division.showcaseName}
+				</em>
+			</h2>
+			<p
+				class:list={['mt-8 max-w-xl leading-7', reverse ? 'text-white/65' : 'text-neutral-500']}
+				data-tina-field={tinaField(division, 'description')}
+			>
+				{division.description}
+			</p>
+			<ul class:list={['mt-10 divide-y', reverse ? 'divide-white/15' : 'divide-neutral-200']}>
+				{division.services.map((service) => (
+					<li class="py-4">
+						<p class="font-medium" data-tina-field={tinaField(service, 'title')}>{service.title}</p>
+						<p
+							class:list={['mt-1 text-sm', reverse ? 'text-white/55' : 'text-neutral-400']}
+							data-tina-field={tinaField(service, 'description')}
+						>
+							{service.description}
+						</p>
+					</li>
+				))}
+			</ul>
+			<a
+				href={`/${division.slug}`}
+				class:list={[
+					'mt-10 inline-flex items-center gap-4 px-7 py-4 text-sm font-medium transition-colors',
+					reverse
+						? 'bg-accent-400 text-azento-950 hover:bg-accent-300'
+						: 'bg-azento-600 text-white hover:bg-azento-700',
+				]}
+				data-tina-field={tinaField(division, 'showcaseLinkLabel')}
+			>
+				{division.showcaseLinkLabel}
+				<span aria-hidden="true">→</span>
+			</a>
+		</div>
+
+		<div class:list={['relative', reverse ? 'lg:order-1' : '']}>
+			<img
+				src={division.heroImage}
+				alt={division.heroAlt}
+				class="aspect-[4/5] w-full object-cover"
+				loading="lazy"
+				data-tina-field={tinaField(division, 'heroImage')}
+			/>
+			<div class:list={[
+				'absolute -bottom-6 p-7 text-center',
+				reverse ? '-right-4 bg-azento-600 text-white' : '-left-4 bg-accent-400 text-azento-950',
+			]}>
+				<strong class="block font-display text-2xl">+{projectCount}</strong>
+				<span
+					class="text-[0.6rem] uppercase tracking-[0.2em]"
+					data-tina-field={tinaField(division, 'countLabel')}
+				>
+					{division.countLabel}
+				</span>
+			</div>
+		</div>
+	</div>
+</section>

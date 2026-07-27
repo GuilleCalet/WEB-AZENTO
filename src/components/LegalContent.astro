@@ -1,0 +1,72 @@
+---
+// @ts-nocheck
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface Props {
+	page: any;
+}
+
+const { page } = Astro.props;
+const StaticBody = page.Content as any;
+---
+
+<main class="pt-20">
+	<header class="bg-azento-700 py-16 text-center text-white">
+		<div class="mx-auto max-w-4xl px-6">
+			<h1
+				class="font-display text-4xl sm:text-5xl"
+				data-tina-field={tinaField(page, 'title')}
+			>
+				{page.title}
+			</h1>
+			<p class="mt-4 text-white/65" data-tina-field={tinaField(page, 'updatedAt')}>{page.updatedAt}</p>
+		</div>
+	</header>
+
+	<section class="bg-neutral-50 py-16 lg:py-24">
+		<div class="mx-auto max-w-4xl px-6">
+			<article class="legal-copy bg-white p-8 shadow-sm sm:p-12" data-tina-field={tinaField(page, 'body')}>
+				{page.body ? <TinaMarkdown content={page.body} /> : StaticBody && <StaticBody />}
+			</article>
+			<div class="mt-8 text-center">
+				<a
+					href="/"
+					class="font-medium text-azento-600 hover:text-accent-600"
+					data-tina-field={tinaField(page, 'backLabel')}
+				>
+					← {page.backLabel}
+				</a>
+			</div>
+		</div>
+	</section>
+</main>
+
+<style>
+	.legal-copy :global(h2) {
+		margin-bottom: 1rem;
+		margin-top: 2.5rem;
+		font-family: 'Playfair Display', Georgia, serif;
+		font-size: 1.65rem;
+		color: #3a5159;
+	}
+
+	.legal-copy :global(h2:first-child) {
+		margin-top: 0;
+	}
+
+	.legal-copy :global(p),
+	.legal-copy :global(li) {
+		line-height: 1.8;
+		color: #525252;
+	}
+
+	.legal-copy :global(p) {
+		margin-bottom: 1rem;
+	}
+
+	.legal-copy :global(a) {
+		color: #a8815a;
+		text-decoration: underline;
+	}
+</style>

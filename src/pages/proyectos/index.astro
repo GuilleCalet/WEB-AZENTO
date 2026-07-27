@@ -1,0 +1,90 @@
+---
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectsPageText from '../../components/ProjectsPageText.astro';
+import { projects, siteSettings } from '../../data/editorial';
+import { getPage } from '../../lib/tina/data';
+import { islands } from '../../lib/tina/islands';
+
+const home = await getPage('home');
+const pageData = home.data?.page;
+const content = siteSettings.projectsPage;
+---
+
+<Layout title={content.seoTitle} description={content.seoDescription}>
+	<TinaIsland name="homeNavbar" wrapper={islands.homeNavbar.wrapper}>
+		<Navbar data={pageData} />
+	</TinaIsland>
+
+	<main>
+		<TinaIsland name="projectsPageText" params={{ mode: 'intro' }} wrapper={islands.projectsPageText.wrapper} primary>
+			<ProjectsPageText data={siteSettings} mode="intro" />
+		</TinaIsland>
+
+		<section class="bg-white py-16 lg:py-24">
+			<div class="mx-auto max-w-7xl px-6">
+				<div id="projects-grid" class="grid gap-5 md:grid-cols-2">
+					{projects.map((project, index) => (
+						<div data-division={project.division}>
+							<TinaIsland
+								name="projectCard"
+								params={{ slug: project.slug, featured: index % 3 === 0 ? 'true' : 'false' }}
+								wrapper={islands.projectCard.wrapper}
+							>
+								<ProjectCard project={project} labels={siteSettings.projectCard} featured={index % 3 === 0} />
+							</TinaIsland>
+						</div>
+					))}
+				</div>
+				<TinaIsland name="projectsPageText" params={{ mode: 'empty' }} wrapper={islands.projectsPageText.wrapper}>
+					<ProjectsPageText data={siteSettings} mode="empty" />
+				</TinaIsland>
+			</div>
+		</section>
+	</main>
+
+	<TinaIsland name="homeFooter" wrapper={islands.homeFooter.wrapper}>
+		<Footer data={pageData} />
+	</TinaIsland>
+</Layout>
+
+<style>
+	:global(.project-filter) {
+		border: 1px solid #c9d3d7;
+		padding: 0.75rem 1.4rem;
+		color: #435f69;
+		font-size: 0.875rem;
+		transition: 180ms ease;
+	}
+
+	:global(.project-filter:hover),
+	:global(.project-filter.is-active) {
+		border-color: #435f69;
+		background: #435f69;
+		color: white;
+	}
+</style>
+
+<script>
+	document.addEventListener('click', (event) => {
+		const button = (event.target as HTMLElement).closest<HTMLButtonElement>('.project-filter');
+		if (!button) return;
+
+		const buttons = document.querySelectorAll<HTMLButtonElement>('.project-filter');
+		const cards = document.querySelectorAll<HTMLElement>('#projects-grid > [data-division]');
+		const empty = document.querySelector<HTMLElement>('#projects-empty');
+		const filter = button.dataset.filter;
+		let visible = 0;
+
+		buttons.forEach((item) => item.classList.toggle('is-active', item === button));
+		cards.forEach((card) => {
+			const show = filter === 'all' || card.dataset.division === filter;
+			card.hidden = !show;
+			if (show) visible += 1;
+		});
+		empty?.classList.toggle('hidden', visible !== 0);
+	});
+</script>

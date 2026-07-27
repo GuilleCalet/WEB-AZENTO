@@ -1,0 +1,123 @@
+---
+// @ts-nocheck
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import ProjectCard from './ProjectCard.astro';
+import SiteText from './SiteText.astro';
+import { getDivision, projects, siteSettings } from '../data/editorial';
+
+interface Props {
+	project: any;
+}
+
+const { project } = Astro.props;
+const content = siteSettings.projectDetail;
+const division = getDivision(project.division);
+const slug = project._sys?.filename || project.slug;
+const related = projects
+	.filter((item) => item.division === project.division && item.slug !== slug)
+	.slice(0, 2);
+const cardWrapper = { tag: 'div' };
+const textWrapper = { tag: 'span' };
+---
+
+<main>
+	<header class="relative min-h-[86svh] overflow-hidden bg-azento-900">
+		<img
+			src={project.coverImage}
+			alt={project.coverAlt}
+			class="absolute inset-0 h-full w-full object-cover"
+			data-tina-field={tinaField(project, 'coverImage')}
+		/>
+		<div class="absolute inset-0 bg-gradient-to-t from-azento-950/90 via-azento-900/20 to-azento-900/40"></div>
+		<div class="relative mx-auto flex min-h-[86svh] max-w-7xl items-end px-6 pb-16 pt-40">
+			<div class="max-w-4xl">
+				<a href={`/${project.division}`} class="text-[0.68rem] uppercase tracking-[0.4em] text-accent-300">
+					<TinaIsland name="siteText" params={{ group: 'projectDetail', field: 'brandLabel' }} wrapper={textWrapper}>
+						<SiteText data={content} field="brandLabel" />
+					</TinaIsland>
+					<span data-tina-field={tinaField(project, 'division')}>{division?.showcaseName}</span>
+				</a>
+				<h1
+					class="mt-6 font-display text-5xl leading-tight text-white sm:text-7xl"
+					data-tina-field={tinaField(project, 'title')}
+				>
+					{project.title}
+				</h1>
+				<div class="mt-7 flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/65">
+					<span data-tina-field={tinaField(project, 'category')}>{project.category}</span>
+					<span data-tina-field={tinaField(project, 'location')}>{project.location}</span>
+					<span data-tina-field={tinaField(project, 'year')}>{project.year}</span>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section class="bg-white py-20 lg:py-28">
+		<div class="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[0.55fr_1.45fr] lg:gap-24">
+			<div>
+				<p class="text-[0.68rem] uppercase tracking-[0.4em] text-accent-600">
+					<TinaIsland name="siteText" params={{ group: 'projectDetail', field: 'sectionLabel' }} wrapper={textWrapper}>
+						<SiteText data={content} field="sectionLabel" />
+					</TinaIsland>
+				</p>
+				<p
+					class="mt-5 font-display text-3xl leading-snug text-azento-900"
+					data-tina-field={tinaField(project, 'summary')}
+				>
+					{project.summary}
+				</p>
+			</div>
+			<article
+				class="project-copy prose prose-lg max-w-none text-neutral-600"
+				data-tina-field={tinaField(project, 'body')}
+			>
+				{project.body && <TinaMarkdown content={project.body} />}
+			</article>
+		</div>
+	</section>
+
+	{project.gallery?.length > 0 && (
+		<section class="bg-neutral-100 py-6">
+			<div class="mx-auto grid max-w-7xl gap-4 px-6 md:grid-cols-2">
+				{project.gallery.map((image, index) => (
+					<img
+						src={image}
+						alt={`${project.title}, ${content.galleryAltLabel} ${index + 1}`}
+						class="aspect-[4/3] h-full w-full object-cover"
+						loading="lazy"
+						data-tina-field={tinaField(project, 'gallery', index)}
+					/>
+				))}
+			</div>
+		</section>
+	)}
+
+	{related.length > 0 && (
+		<section class="bg-white py-20 lg:py-28">
+			<div class="mx-auto max-w-7xl px-6">
+				<h2 class="mb-10 font-display text-4xl text-azento-950">
+					<TinaIsland name="siteText" params={{ group: 'projectDetail', field: 'relatedPrefix' }} wrapper={textWrapper}>
+						<SiteText data={content} field="relatedPrefix" />
+					</TinaIsland>
+					<span data-tina-field={tinaField(project, 'division')}>{division?.showcaseName}</span>
+				</h2>
+				<div class="grid gap-5 md:grid-cols-2">
+					{related.map((item) => (
+						<TinaIsland name="projectCard" params={{ slug: item.slug }} wrapper={cardWrapper}>
+							<ProjectCard project={item} labels={siteSettings.projectCard} />
+						</TinaIsland>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+</main>
+
+<style>
+	.project-copy :global(p) {
+		margin-bottom: 1.5rem;
+		line-height: 1.8;
+	}
+</style>

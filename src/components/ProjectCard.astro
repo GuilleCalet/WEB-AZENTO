@@ -1,0 +1,61 @@
+---
+// @ts-nocheck
+import { tinaField } from '@tinacms/astro/tina-field';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import SiteText from './SiteText.astro';
+import { getDivision, type Project, type SiteSettings } from '../data/editorial';
+
+interface Props {
+	project: Project;
+	labels: SiteSettings['projectCard'];
+	featured?: boolean;
+}
+
+const { project, labels, featured = false } = Astro.props;
+const divisionLabel = getDivision(project.division)?.showcaseName || '';
+const textWrapper = { tag: 'span' };
+---
+
+<a
+	href={`/proyectos/${project.slug}`}
+	class:list={[
+		'group relative block overflow-hidden bg-azento-900',
+		featured ? 'min-h-[31rem] lg:min-h-[38rem]' : 'min-h-[25rem]',
+	]}
+>
+	<img
+		src={project.coverImage}
+		alt={project.coverAlt || project.title}
+		class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+		loading="lazy"
+		data-tina-field={tinaField(project, 'coverImage')}
+	/>
+	<div class="absolute inset-0 bg-gradient-to-t from-azento-950/85 via-azento-900/10 to-transparent"></div>
+	<div class="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+		<p class="mb-3 text-[0.65rem] font-medium uppercase tracking-[0.28em] text-accent-300">
+			<TinaIsland name="siteText" params={{ group: 'projectCard', field: 'brandLabel' }} wrapper={textWrapper}>
+				<SiteText data={labels} field="brandLabel" />
+			</TinaIsland>
+			<span data-tina-field={tinaField(project, 'division')}>{divisionLabel}</span>
+			·
+			<span data-tina-field={tinaField(project, 'year')}>{project.year}</span>
+		</p>
+		<h3
+			class="font-display text-2xl text-white sm:text-3xl"
+			data-tina-field={tinaField(project, 'title')}
+		>
+			{project.title}
+		</h3>
+		<p class="mt-2 text-sm text-white/70">
+			<span data-tina-field={tinaField(project, 'category')}>{project.category}</span>
+			·
+			<span data-tina-field={tinaField(project, 'location')}>{project.location}</span>
+		</p>
+		<span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-white">
+			<TinaIsland name="siteText" params={{ group: 'projectCard', field: 'viewLabel' }} wrapper={textWrapper}>
+				<SiteText data={labels} field="viewLabel" />
+			</TinaIsland>
+			<span aria-hidden="true">↗</span>
+		</span>
+	</div>
+</a>

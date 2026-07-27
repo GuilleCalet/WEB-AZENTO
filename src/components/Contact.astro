@@ -372,10 +372,10 @@ const icons: Record<string, string> = {
 	const statusSuccess = document.getElementById('status-success') as HTMLDivElement;
 	const statusError = document.getElementById('status-error') as HTMLDivElement;
 	const errorMessage = document.getElementById('error-message') as HTMLParagraphElement;
-	const submitLabel = form.dataset.submitLabel || 'Enviar solicitud';
-	const submittingLabel = form.dataset.submittingLabel || 'Enviando...';
-	const defaultErrorMessage = form.dataset.defaultErrorMessage || 'Por favor, inténtalo de nuevo.';
-	const localErrorMessage = form.dataset.localErrorMessage || 'En local, el formulario necesita un servidor PHP. Prueba la web en Arsys o instala PHP para probarlo en tu ordenador.';
+	const submitLabel = form.dataset.submitLabel || '';
+	const submittingLabel = form.dataset.submittingLabel || '';
+	const defaultErrorMessage = form.dataset.defaultErrorMessage || '';
+	const localErrorMessage = form.dataset.localErrorMessage || '';
 
 	function setLoading(loading: boolean) {
 		submitBtn.disabled = loading;
@@ -445,7 +445,7 @@ const icons: Record<string, string> = {
 				showStatus('success');
 				resetForm();
 			} else {
-				showStatus('error', result.error || 'Error al procesar la solicitud');
+				showStatus('error', defaultErrorMessage);
 			}
 		} catch (error) {
 			console.error('Error:', error);

@@ -11,3 +11,23 @@ export const getPage = (slug: string) =>
   requestWithMetadata(client.queries.page({ relativePath: slug + '.md' }), {
     priority: 'primary',
   });
+
+export const getDivisionDocument = (slug: string) =>
+  requestWithMetadata(client.queries.division({ relativePath: slug + '.md' }), {
+    priority: 'primary',
+  });
+
+export const getProjectDocument = (slug: string) =>
+  requestWithMetadata(client.queries.project({ relativePath: slug + '.md' }), {
+    priority: 'primary',
+  });
+
+export const getSiteSettings = () =>
+  requestWithMetadata(client.queries.siteSettings({ relativePath: 'site.md' }), {
+    priority: 'primary',
+  });
+
+export const getLegalDocument = (slug: string) =>
+  requestWithMetadata(client.queries.legalPage({ relativePath: slug + '.md' }), {
+    priority: 'primary',
+  });

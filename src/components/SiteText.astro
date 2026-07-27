@@ -1,0 +1,13 @@
+---
+// @ts-nocheck
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface Props {
+	data?: Record<string, unknown> | null;
+	field: string;
+}
+
+const { data, field } = Astro.props;
+---
+
+<span data-tina-field={data ? tinaField(data, field) : undefined}>{data?.[field]}</span>

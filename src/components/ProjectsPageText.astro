@@ -1,0 +1,76 @@
+---
+// @ts-nocheck
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface Props {
+	data?: any;
+	mode?: 'intro' | 'empty';
+}
+
+const { data, mode = 'intro' } = Astro.props;
+const content = data?.projectsPage;
+---
+
+{mode === 'intro' ? (
+	<>
+		<header class="bg-azento-700 pb-20 pt-40 text-white lg:pb-24">
+			<div class="mx-auto max-w-7xl px-6">
+				<p
+					class="mb-7 text-[0.68rem] uppercase tracking-[0.45em] text-accent-300"
+					data-tina-field={content ? tinaField(content, 'eyebrow') : undefined}
+				>
+					{content?.eyebrow}
+				</p>
+				<h1 class="font-display text-6xl sm:text-7xl">
+					<span data-tina-field={content ? tinaField(content, 'headlinePrefix') : undefined}>{content?.headlinePrefix}</span>
+					<em
+						class="font-normal text-accent-300"
+						data-tina-field={content ? tinaField(content, 'headlineAccent') : undefined}
+					>
+						{content?.headlineAccent}
+					</em>
+				</h1>
+				<p
+					class="mt-7 max-w-2xl text-lg leading-8 text-white/65"
+					data-tina-field={content ? tinaField(content, 'description') : undefined}
+				>
+					{content?.description}
+				</p>
+			</div>
+		</header>
+		<div class="mx-auto flex max-w-7xl flex-wrap gap-3 px-6 pt-16" role="group" aria-label={content?.filterAriaLabel}>
+			<button
+				class="project-filter is-active"
+				type="button"
+				data-filter="all"
+				data-tina-field={content ? tinaField(content, 'filterAll') : undefined}
+			>
+				{content?.filterAll}
+			</button>
+			<button
+				class="project-filter"
+				type="button"
+				data-filter="madera"
+				data-tina-field={content ? tinaField(content, 'filterWood') : undefined}
+			>
+				{content?.filterWood}
+			</button>
+			<button
+				class="project-filter"
+				type="button"
+				data-filter="reformas"
+				data-tina-field={content ? tinaField(content, 'filterReforms') : undefined}
+			>
+				{content?.filterReforms}
+			</button>
+		</div>
+	</>
+) : (
+	<p
+		id="projects-empty"
+		class="hidden py-16 text-center text-neutral-500"
+		data-tina-field={content ? tinaField(content, 'emptyMessage') : undefined}
+	>
+		{content?.emptyMessage}
+	</p>
+)}

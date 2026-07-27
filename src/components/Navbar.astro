@@ -19,11 +19,12 @@ const navbar = data?.navbar;
 const fallbackNavbar = {
 	logoImage: "/images/logo_azento.jpg",
 	logoAlt: "AZento Home Solutions",
+	mobileMenuLabel: "Abrir menú",
 	navLinks: [
-	{ label: "Inicio", href: "#inicio" },
-	{ label: "Servicios", href: "#servicios" },
-	{ label: "Proyectos", href: "#proyectos" },
-	{ label: "Contacto", href: "#contacto" },
+	{ label: "Madera", href: "/madera" },
+	{ label: "Reformas", href: "/reformas" },
+	{ label: "Proyectos", href: "/proyectos" },
+	{ label: "Contacto", href: "/#contacto" },
 	],
 	ctaButton: {
 		label: "Pedir Presupuesto",
@@ -36,6 +37,7 @@ const navLinks = editableNavLinks.length ? editableNavLinks : fallbackNavbar.nav
 const ctaButton = { ...fallbackNavbar.ctaButton, ...(navbar?.ctaButton ?? {}) };
 const logoImage = navbar?.logoImage || fallbackNavbar.logoImage;
 const logoAlt = navbar?.logoAlt || fallbackNavbar.logoAlt;
+const mobileMenuLabel = navbar?.mobileMenuLabel || fallbackNavbar.mobileMenuLabel;
 ---
 
 <nav 
@@ -46,7 +48,7 @@ const logoAlt = navbar?.logoAlt || fallbackNavbar.logoAlt;
 		<div class="flex h-20 items-center justify-between">
 			<!-- Logo AZento Home Solutions -->
 			<a 
-				href="#inicio" 
+				href="/"
 				class="relative flex items-center group"
 			>
 				<!-- Contenedor del logo con fondo que coincide con el logo -->
@@ -98,7 +100,7 @@ const logoAlt = navbar?.logoAlt || fallbackNavbar.logoAlt;
 				id="mobile-menu-btn"
 				class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg 
 					hover:bg-azento-100/50 transition-colors"
-				aria-label="Abrir menú"
+				aria-label={mobileMenuLabel}
 				aria-expanded="false"
 			>
 				<span class="hamburger-line w-6 h-0.5 bg-azento-600 transition-all duration-300"></span>

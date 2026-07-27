@@ -26,15 +26,16 @@ stats:
 navbar:
   logoImage: /images/logo_azento.jpg
   logoAlt: AZento Home Solutions
+  mobileMenuLabel: Abrir menú
   navLinks:
-    - label: Inicio
-      href: '#inicio'
-    - label: Servicios
-      href: '#servicios'
+    - label: Madera
+      href: /madera
+    - label: Reformas
+      href: /reformas
     - label: Proyectos
-      href: '#proyectos'
+      href: /proyectos
     - label: Contacto
-      href: '#contacto'
+      href: /#contacto
   ctaButton:
     label: Pedir Presupuesto
     href: /#presupuesto
@@ -188,16 +189,14 @@ footer:
       href: 'https://www.instagram.com/azentohome/'
       icon: instagram
   navigation:
-    - title: Servicios
+    - title: Divisiones
       links:
-        - label: Jardines y Terrazas
-          href: '#servicios'
-        - label: Pérgolas y Celosías
-          href: '#servicios'
-        - label: Fachadas
-          href: '#servicios'
-        - label: Reformas Interiores
-          href: '#servicios'
+        - label: AZento Madera
+          href: /madera
+        - label: AZento Reformas
+          href: /reformas
+        - label: Proyectos
+          href: /proyectos
     - title: Contacto
       links:
         - label: 919 898 717
@@ -213,5 +212,22 @@ footer:
           id: open-cookie-settings
   copyright: © 2024 AZento Home Solutions. Todos los derechos reservados.
   backToTopLabel: Volver arriba
+editorialHome:
+  heroEyebrow: Madrid · Desde 2020
+  heroPrefix: Diseño que
+  heroAccent: transforma
+  heroSuffix: espacios.
+  heroDescription: Maderas tecnológicas de precisión y reformas integrales que convierten cada rincón en un espacio extraordinario.
+  divisionsButton: Nuestras divisiones
+  projectsButton: Ver proyectos
+  heroImageAlt: Proyecto de AZento Home
+  structureEyebrow: Nuestra estructura
+  structurePrefix: Dos divisiones.
+  structureAccent: Un mismo
+  structureSuffix: compromiso con el detalle.
+  structureDescription: AZento Home Solutions reúne especialistas en madera tecnológica y un equipo de reformas para resolver cada proyecto con una visión completa.
+  portfolioEyebrow: Portafolio
+  portfolioPrefix: Proyectos
+  portfolioAccent: recientes
+  allProjectsLabel: Todos los proyectos
 ---
-

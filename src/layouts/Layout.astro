@@ -6,24 +6,30 @@
 
 import CookieBanner from '../components/CookieBanner.astro';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import { siteSettings } from '../data/editorial';
+import { islands } from '../lib/tina/islands';
 
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
 }
 
 const { 
-	title = "AZento Home",
-	description = "Transformamos espacios exteriores en jardines de ensueño. Paisajismo exclusivo, reformas integrales y mantenimiento premium para hogares que buscan la excelencia."
+	title = siteSettings.branding.defaultTitle,
+	description = siteSettings.branding.defaultDescription,
+	image = "/images/jardin_2.png",
 } = Astro.props;
 
 // Datos SEO y meta tags
 const siteData = {
-	siteName: "AZento Home",
+	siteName: siteSettings.branding.siteName,
 	siteUrl: "https://azentohome.com",
-	image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1200",
-	twitterHandle: "@azentohome",
+	twitterHandle: siteSettings.branding.twitterHandle,
 };
+const canonicalUrl = new URL(Astro.url.pathname, siteData.siteUrl).toString();
+const socialImage = new URL(image, siteData.siteUrl).toString();
 ---
 
 <!doctype html>
@@ -38,14 +44,14 @@ const siteData = {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="robots" content="index, follow" />
-		<link rel="canonical" href={siteData.siteUrl} />
+		<link rel="canonical" href={canonicalUrl} />
 		
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content={siteData.siteUrl} />
+		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={siteData.image} />
+		<meta property="og:image" content={socialImage} />
 		<meta property="og:site_name" content={siteData.siteName} />
 		
 		<!-- Twitter Card -->
@@ -53,7 +59,7 @@ const siteData = {
 		<meta name="twitter:site" content={siteData.twitterHandle} />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={siteData.image} />
+		<meta name="twitter:image" content={socialImage} />
 		
 		<!-- Favicon -->
 		<link rel="icon" type="image/jpeg" href="/images/logo_azento.jpg?v=3" />
@@ -76,7 +82,9 @@ const siteData = {
 	</head>
 	<body class="font-body bg-neutral-50 text-neutral-900 antialiased overflow-x-hidden">
 		<slot />
-		<CookieBanner />
+		<TinaIsland name="siteCookies" wrapper={islands.siteCookies.wrapper}>
+			<CookieBanner data={siteSettings.cookies} />
+		</TinaIsland>
 	</body>
 </html>
 
