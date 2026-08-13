@@ -12,17 +12,17 @@ const clientId = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
 const token = process.env.TINA_TOKEN;
 
 const linkFields = [
-  { type: "string", name: "label", label: "Label" },
-  { type: "string", name: "href", label: "Link" },
+  { type: "string", name: "label", label: "Texto visible del enlace" },
+  { type: "string", name: "href", label: "Destino del enlace" },
 ] as any[];
 
 const sectionHeaderFields = [
-  { type: "string", name: "tagline", label: "Tagline" },
-  { type: "string", name: "headline", label: "Headline" },
+  { type: "string", name: "tagline", label: "Texto pequeño encima del título" },
+  { type: "string", name: "headline", label: "Título de la sección" },
   {
     type: "string",
     name: "description",
-    label: "Description",
+    label: "Texto descriptivo de la sección",
     ui: {
       component: "textarea",
     },
@@ -55,20 +55,20 @@ export default defineConfig({
     collections: [
       {
         name: "page",
-        label: "Pages",
+        label: "Páginas de la web",
         path: "content/pages",
         fields: [
           {
             type: "string",
             name: "title",
-            label: "SEO Title",
+            label: "Título para Google",
             isTitle: true,
             required: true,
           },
           {
             type: "string",
             name: "description",
-            label: "SEO Description",
+            label: "Descripción para Google",
             ui: {
               component: "textarea",
             },
@@ -76,22 +76,22 @@ export default defineConfig({
           {
             type: "string",
             name: "badge",
-            label: "Hero Badge",
+            label: "Texto pequeño sobre el título principal",
           },
           {
             type: "string",
             name: "headlinePrefix",
-            label: "Hero Headline Prefix",
+            label: "Primera parte del título principal",
           },
           {
             type: "string",
             name: "headlineAccent",
-            label: "Hero Headline Accent",
+            label: "Parte destacada del título principal",
           },
           {
             type: "string",
             name: "subheadline",
-            label: "Hero Subheadline",
+            label: "Texto debajo del título principal",
             ui: {
               component: "textarea",
             },
@@ -99,59 +99,59 @@ export default defineConfig({
           {
             type: "object",
             name: "ctaPrimary",
-            label: "Primary Button",
+            label: "Botón principal para pedir presupuesto",
             fields: [
-              { type: "string", name: "label", label: "Label" },
-              { type: "string", name: "href", label: "Link" },
+              { type: "string", name: "label", label: "Texto del botón" },
+              { type: "string", name: "href", label: "Destino al hacer clic" },
             ],
           },
           {
             type: "object",
             name: "ctaSecondary",
-            label: "Secondary Button",
+            label: "Botón secundario para ver proyectos",
             fields: [
-              { type: "string", name: "label", label: "Label" },
-              { type: "string", name: "href", label: "Link" },
+              { type: "string", name: "label", label: "Texto del botón" },
+              { type: "string", name: "href", label: "Destino al hacer clic" },
             ],
           },
           {
             type: "object",
             name: "backgroundImages",
-            label: "Background Images",
+            label: "Imágenes de fondo de la portada",
             list: true,
             fields: [
-              { type: "image", name: "image", label: "Image" },
-              { type: "string", name: "alt", label: "Alt Text" },
+              { type: "image", name: "image", label: "Imagen" },
+              { type: "string", name: "alt", label: "Descripción de la imagen" },
             ],
           },
           {
             type: "object",
             name: "stats",
-            label: "Stats",
+            label: "Datos destacados de la portada",
             list: true,
             fields: [
-              { type: "string", name: "value", label: "Value" },
-              { type: "string", name: "label", label: "Label" },
+              { type: "string", name: "value", label: "Número o dato grande" },
+              { type: "string", name: "label", label: "Texto que explica el dato" },
             ],
           },
           {
             type: "object",
             name: "navbar",
-            label: "Navbar",
+            label: "Menú superior",
             fields: [
               { type: "image", name: "logoImage", label: "Logo" },
-              { type: "string", name: "logoAlt", label: "Logo Alt Text" },
+              { type: "string", name: "logoAlt", label: "Descripción del logo" },
               {
                 type: "object",
                 name: "navLinks",
-                label: "Navigation Links",
+                label: "Enlaces del menú",
                 list: true,
                 fields: linkFields,
               },
               {
                 type: "object",
                 name: "ctaButton",
-                label: "CTA Button",
+                label: "Botón destacado del menú",
                 fields: linkFields,
               },
             ],
@@ -159,20 +159,20 @@ export default defineConfig({
           {
             type: "object",
             name: "servicesSection",
-            label: "Services Section",
+            label: "Bloque de servicios",
             fields: [
               ...sectionHeaderFields,
               {
                 type: "object",
                 name: "items",
-                label: "Service Cards",
+                label: "Tarjetas de servicios",
                 list: true,
                 fields: [
-                  { type: "string", name: "title", label: "Title" },
+                  { type: "string", name: "title", label: "Nombre del servicio" },
                   {
                     type: "string",
                     name: "shortDescription",
-                    label: "Short Description",
+                    label: "Descripción corta del servicio",
                     ui: {
                       component: "textarea",
                     },
@@ -180,15 +180,15 @@ export default defineConfig({
                   {
                     type: "string",
                     name: "icon",
-                    label: "Icon",
+                    label: "Icono del servicio",
                     options: ["garden", "pergola", "facade", "interior"],
                   },
-                  { type: "string", name: "href", label: "Card Link" },
-                  { type: "string", name: "linkLabel", label: "Link Label" },
+                  { type: "string", name: "href", label: "Destino al hacer clic en la tarjeta" },
+                  { type: "string", name: "linkLabel", label: "Texto del enlace de la tarjeta" },
                   {
                     type: "string",
                     name: "features",
-                    label: "Features",
+                    label: "Puntos destacados del servicio",
                     list: true,
                   },
                 ],
@@ -196,12 +196,12 @@ export default defineConfig({
               {
                 type: "string",
                 name: "ctaText",
-                label: "CTA Text",
+                label: "Texto de llamada a la acción",
               },
               {
                 type: "object",
                 name: "ctaLink",
-                label: "CTA Link",
+                label: "Enlace de la llamada a la acción",
                 fields: linkFields,
               },
             ],
@@ -209,32 +209,32 @@ export default defineConfig({
           {
             type: "object",
             name: "gallerySection",
-            label: "Gallery Section",
+            label: "Bloque de proyectos",
             fields: [
               ...sectionHeaderFields,
               {
                 type: "object",
                 name: "projects",
-                label: "Projects",
+                label: "Proyectos mostrados",
                 list: true,
                 fields: [
-                  { type: "string", name: "title", label: "Title" },
-                  { type: "string", name: "category", label: "Category" },
-                  { type: "string", name: "location", label: "Location" },
-                  { type: "image", name: "image", label: "Image" },
+                  { type: "string", name: "title", label: "Nombre del proyecto" },
+                  { type: "string", name: "category", label: "Tipo de proyecto" },
+                  { type: "string", name: "location", label: "Ubicación del proyecto" },
+                  { type: "image", name: "image", label: "Imagen del proyecto" },
                   {
                     type: "string",
                     name: "size",
-                    label: "Grid Size",
+                    label: "Tamaño de la tarjeta",
                     options: ["large", "medium", "small"],
                   },
-                  { type: "string", name: "objectPosition", label: "Object Position" },
+                  { type: "string", name: "objectPosition", label: "Posición de la imagen dentro de la tarjeta" },
                 ],
               },
               {
                 type: "object",
                 name: "ctaLink",
-                label: "CTA Link",
+                label: "Enlace para ver más proyectos",
                 fields: linkFields,
               },
             ],
@@ -242,43 +242,43 @@ export default defineConfig({
           {
             type: "object",
             name: "contactSection",
-            label: "Contact Section",
+            label: "Bloque de contacto",
             fields: [
               ...sectionHeaderFields,
               {
                 type: "object",
                 name: "contactInfo",
-                label: "Contact Info",
+                label: "Datos de contacto visibles",
                 list: true,
                 fields: [
                   {
                     type: "string",
                     name: "icon",
-                    label: "Icon",
+                    label: "Icono del dato de contacto",
                     options: ["phone", "email", "instagram", "location"],
                   },
-                  { type: "string", name: "label", label: "Label" },
-                  { type: "string", name: "value", label: "Value" },
-                  { type: "string", name: "href", label: "Link" },
+                  { type: "string", name: "label", label: "Nombre del dato" },
+                  { type: "string", name: "value", label: "Texto que se muestra" },
+                  { type: "string", name: "href", label: "Destino al hacer clic" },
                 ],
               },
-              { type: "string", name: "formTitle", label: "Form Title" },
-              { type: "string", name: "nameLabel", label: "Name Label" },
-              { type: "string", name: "namePlaceholder", label: "Name Placeholder" },
-              { type: "string", name: "emailLabel", label: "Email Label" },
-              { type: "string", name: "emailPlaceholder", label: "Email Placeholder" },
-              { type: "string", name: "phoneLabel", label: "Phone Label" },
-              { type: "string", name: "phonePlaceholder", label: "Phone Placeholder" },
-              { type: "string", name: "serviceLabel", label: "Service Label" },
-              { type: "string", name: "servicePlaceholder", label: "Service Placeholder" },
+              { type: "string", name: "formTitle", label: "Título del formulario" },
+              { type: "string", name: "nameLabel", label: "Etiqueta del campo nombre" },
+              { type: "string", name: "namePlaceholder", label: "Ejemplo dentro del campo nombre" },
+              { type: "string", name: "emailLabel", label: "Etiqueta del campo email" },
+              { type: "string", name: "emailPlaceholder", label: "Ejemplo dentro del campo email" },
+              { type: "string", name: "phoneLabel", label: "Etiqueta del campo teléfono" },
+              { type: "string", name: "phonePlaceholder", label: "Ejemplo dentro del campo teléfono" },
+              { type: "string", name: "serviceLabel", label: "Etiqueta del desplegable de servicio" },
+              { type: "string", name: "servicePlaceholder", label: "Texto inicial del desplegable de servicio" },
               {
                 type: "object",
                 name: "serviceOptions",
-                label: "Service Options",
+                label: "Opciones del desplegable de servicio",
                 list: true,
                 fields: [
-                  { type: "string", name: "label", label: "Label" },
-                  { type: "string", name: "value", label: "Value" },
+                  { type: "string", name: "label", label: "Texto visible de la opción" },
+                  { type: "string", name: "value", label: "Valor interno de la opción" },
                 ],
               },
               { type: "string", name: "messageLabel", label: "Etiqueta del mensaje" },
