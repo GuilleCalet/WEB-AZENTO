@@ -280,20 +280,20 @@ export default defineConfig({
       },
       {
         name: "page",
-        label: "Pages",
+        label: "Páginas",
         path: "content/pages",
         fields: [
           {
             type: "string",
             name: "title",
-            label: "SEO Title",
+            label: "Título SEO",
             isTitle: true,
             required: true,
           },
           {
             type: "string",
             name: "description",
-            label: "SEO Description",
+            label: "Descripción SEO",
             ui: {
               component: "textarea",
             },
@@ -301,22 +301,22 @@ export default defineConfig({
           {
             type: "string",
             name: "badge",
-            label: "Hero Badge",
+            label: "Texto destacado superior",
           },
           {
             type: "string",
             name: "headlinePrefix",
-            label: "Hero Headline Prefix",
+            label: "Título principal (inicio)",
           },
           {
             type: "string",
             name: "headlineAccent",
-            label: "Hero Headline Accent",
+            label: "Título principal destacado",
           },
           {
             type: "string",
             name: "subheadline",
-            label: "Hero Subheadline",
+            label: "Subtítulo principal",
             ui: {
               component: "textarea",
             },
@@ -324,39 +324,39 @@ export default defineConfig({
           {
             type: "object",
             name: "ctaPrimary",
-            label: "Primary Button",
+            label: "Botón principal",
             fields: [
-              { type: "string", name: "label", label: "Label" },
-              { type: "string", name: "href", label: "Link" },
+              { type: "string", name: "label", label: "Texto del botón" },
+              { type: "string", name: "href", label: "Enlace" },
             ],
           },
           {
             type: "object",
             name: "ctaSecondary",
-            label: "Secondary Button",
+            label: "Botón secundario",
             fields: [
-              { type: "string", name: "label", label: "Label" },
-              { type: "string", name: "href", label: "Link" },
+              { type: "string", name: "label", label: "Texto del botón" },
+              { type: "string", name: "href", label: "Enlace" },
             ],
           },
           {
             type: "object",
             name: "backgroundImages",
-            label: "Background Images",
+            label: "Imágenes de fondo",
             list: true,
             fields: [
-              { type: "image", name: "image", label: "Image" },
-              { type: "string", name: "alt", label: "Alt Text" },
+              { type: "image", name: "image", label: "Imagen" },
+              { type: "string", name: "alt", label: "Texto alternativo" },
             ],
           },
           {
             type: "object",
             name: "stats",
-            label: "Stats",
+            label: "Cifras destacadas",
             list: true,
             fields: [
-              { type: "string", name: "value", label: "Value" },
-              { type: "string", name: "label", label: "Label" },
+              { type: "string", name: "value", label: "Valor" },
+              { type: "string", name: "label", label: "Descripción" },
             ],
           },
           {
